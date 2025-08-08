@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Grid, List, ZoomIn, Download } from 'lucide-react';
+import GalleryImage from '../components/GalleryImage';
 import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
 import { db } from '../firebase';
 
@@ -235,11 +236,7 @@ const Gallery: React.FC = () => {
                 >
                                   <div className="aspect-[4/3] bg-gradient-to-br from-accent-color to-gradient-blue-dark relative overflow-hidden">
                   {photo.downloadURL ? (
-                    <img
-                      src={photo.downloadURL}
-                      alt={photo.title}
-                      className="w-full h-full object-cover"
-                    />
+                    <GalleryImage src={photo.downloadURL} title={photo.title} />
                   ) : (
                     <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-30 transition-all duration-300" />
                   )}
@@ -321,6 +318,7 @@ const Gallery: React.FC = () => {
                     <img
                       src={selectedPhoto.downloadURL}
                       alt={selectedPhoto.title}
+                      loading="lazy"
                       className="w-full h-full object-cover"
                     />
                   ) : (

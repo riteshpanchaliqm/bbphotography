@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowDown, Camera, Award, Heart, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import ParallaxSection from '../components/ParallaxSection';
+import LogoReveal from '../components/LogoReveal';
 
 const Home: React.FC = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -37,7 +39,11 @@ const Home: React.FC = () => {
   }, [heroImages.length]);
 
   return (
-    <div className="min-h-screen">
+    <>
+      <ParallaxSection image="/api/placeholder/1920/1080/5">
+        <LogoReveal logoSrc="/logo.svg" />
+      </ParallaxSection>
+      <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         {/* Animated Background */}
@@ -366,7 +372,8 @@ const Home: React.FC = () => {
           </div>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 };
 

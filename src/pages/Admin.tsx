@@ -5,6 +5,7 @@ import { Upload, Image, Trash2, Eye, Camera } from 'lucide-react';
 import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 import { collection, addDoc, deleteDoc, doc, updateDoc, onSnapshot, query, orderBy } from 'firebase/firestore';
 import { storage, db } from '../firebase';
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, User } from 'firebase/auth';
 
 interface UploadedPhoto {
   id: string;
@@ -25,6 +26,22 @@ const Admin: React.FC = () => {
   const [selectedPhoto, setSelectedPhoto] = useState<UploadedPhoto | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
+
+  const auth = getAuth();
+  const [user, setUser] = useState<User | null>(null);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [authError, setAuthError] = useState('');
+
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, setUser);
+    return unsub;
+  }, [auth]);
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    signInWithEmailAndPassword(auth, email, password).catch(err => setAuthError(err.message));
+  };
 
   const categories = useMemo(() => ['courtship', 'feathers', 'natural', 'closeup', 'display', 'behavior', 'habitat'], []);
   const frameSizes = ['small', 'medium', 'large', 'wide'];
@@ -242,6 +259,32 @@ const Admin: React.FC = () => {
     }
   };
 
+  if (!user) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <form onSubmit={handleLogin} className="bg-gray-900 p-8 rounded-lg space-y-4 w-full max-w-sm">
+          <h2 className="text-2xl font-bold text-center text-text-primary">Admin Login</h2>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+            className="w-full px-4 py-2 rounded bg-gray-800 text-text-primary focus:outline-none"
+          />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            className="w-full px-4 py-2 rounded bg-gray-800 text-text-primary focus:outline-none"
+          />
+          {authError && <p className="text-red-500 text-sm">{authError}</p>}
+          <button type="submit" className="w-full bg-accent-color text-primary-color py-2 rounded-lg">Login</button>
+        </form>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen pt-20 bg-primary-color">
       <div className="max-w-7xl mx-auto px-4 py-8">
@@ -355,6 +398,7 @@ const Admin: React.FC = () => {
                     <img
                       src={photo.preview}
                       alt={photo.title}
+                      loading="lazy"
                       className="w-full h-full object-cover"
                     />
                     {photo.watermarked && (
@@ -465,6 +509,7 @@ const Admin: React.FC = () => {
                   <img
                     src={selectedPhoto.preview}
                     alt={selectedPhoto.title}
+                    loading="lazy"
                     className="w-full h-full object-cover"
                   />
                 </div>
