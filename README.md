@@ -9,12 +9,14 @@ A stunning, modern photography showcase website inspired by the Rockstar Games d
 - **Responsive Design**: Perfect on all devices - desktop, tablet, and mobile
 - **Dark Theme**: Elegant dark theme with golden accents
 - **Smooth Animations**: Powered by Framer Motion for fluid interactions
+- **GSAP Enhancements**: Parallax scrolling, ScrollTrigger effects and SVG mask logo reveal
 
 ### 📸 Photography Showcase
 - **Different Frame Sizes**: Small, medium, large, and wide frame layouts
 - **Moving Photos**: Dynamic photo galleries with hover effects
 - **Peacock Quotes**: Beautiful quotes about photography and life
 - **Watermarking**: Automatic "BBPhotography" watermark on uploaded images
+- **Lazy Loading**: Images load only as they approach the viewport
 
 ### 🎯 Gallery Features
 - **Masonry Layout**: Beautiful masonry grid for photo display
@@ -27,6 +29,7 @@ A stunning, modern photography showcase website inspired by the Rockstar Games d
 - **Watermarking**: Add "BBPhotography" watermark to images
 - **Photo Management**: Edit titles, categories, and frame sizes
 - **Real-time Preview**: See changes instantly
+- **Secure Login**: Firebase Authentication protects the admin tools
 
 ### 📱 About Section
 - **Photographer Details**: Complete profile and contact information
@@ -39,6 +42,7 @@ A stunning, modern photography showcase website inspired by the Rockstar Games d
 - **React 18**: Modern React with hooks and functional components
 - **TypeScript**: Type-safe development
 - **Framer Motion**: Smooth animations and transitions
+- **GSAP + ScrollTrigger**: Advanced scroll and parallax animations
 - **React Router**: Client-side routing
 - **Lucide React**: Beautiful icons
 - **React Dropzone**: File upload functionality
@@ -160,6 +164,7 @@ npm run build
 ### Deploy to Vercel
 1. Install Vercel CLI: `npm i -g vercel`
 2. Run: `vercel`
+3. The included `vercel.json` ensures correct single-page app routing
 
 ## 📱 Browser Support
 
